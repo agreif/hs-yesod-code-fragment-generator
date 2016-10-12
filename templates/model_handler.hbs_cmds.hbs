@@ -1,0 +1,23 @@
+{{#with generate.model_handler}}
+  {{#if replace-start}}
+replace_start="-- {{replace-start}}"
+replace_end="-- {{replace-end}}"
+
+handler_file=__YESOD_PROJECT_DIR__/Handler/{{file}}
+echo "  update file: $handler_file"
+if test ! -f $handler_file; then
+    echo "ERROR: file does not exist: $handler_file"
+    exit 1
+fi
+grep -q -- "$replace_start" $handler_file
+if test $? -ne 0; then
+    cat >> $handler_file <<EOF
+$replace_start
+$replace_end
+EOF
+fi
+
+sed -i '' -e "/$replace_start/,/$replace_end/{//p;d;}" $handler_file
+sed -i '' -e "/$replace_start/ r __GEN_CODE_FILE__" $handler_file
+  {{/if}}
+{{/with}}

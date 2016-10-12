@@ -1,0 +1,51 @@
+data V{{T}}{{cap modelName}} = V{{T}}{{cap modelName}}
+  {
+{{#filterByPropValues "propName" formPropNames props}}
+    v{{../T}}{{cap ../modelName}}{{cap propName}} :: {{#ifPropEquals prop=../requiredFuncName equals=false}}Maybe {{/ifPropEquals}}{{propType}}{{commaDelim}}
+{{/filterByPropValues}}
+  }
+{{#each viewModel.deriving}}
+  deriving {{this}}
+{{/each}}
+
+v{{T}}{{cap modelName}}Form :: Maybe {{#if viewModel.baseModelName}}{{cap viewModel.baseModelName}}{{else}}V{{T}}{{cap modelName}}{{/if}}{{#each additionalFormArgs}}{{#if argType}} -> {{argType}}{{/if}}{{/each}} -> Html -> MForm Handler (FormResult V{{T}}{{cap modelName}}, Widget)
+v{{T}}{{cap modelName}}Form maybe{{#if viewModel.baseModelName}}{{cap viewModel.baseModelName}}{{else}}V{{T}}{{cap modelName}}{{/if}}{{#each additionalFormArgs}}{{#if argName}} {{argName}}{{/if}}{{/each}} extra = do
+{{#filterByPropValues "propName" formPropNames props}}
+  {{#ifProp prop=../customFormFieldBuilderPropName}}
+  ({{propName}}Result, {{propName}}View) <-
+{{{indentProp "    " prop=../customFormFieldBuilderPropName}}}
+  {{else}}
+  ({{propName}}Result, {{propName}}View) <- {{#ifPropEquals prop=../requiredFuncName equals=true}}mreq{{else}}mopt{{/ifPropEquals}} {{#if validator}}{{propName}}{{cap formFieldFunc}}Validator{{else}}{{formFieldFunc}}{{/if}}
+    {{propName}}FieldSettings
+    {{#ifProp prop=../customFieldDefaultPropName}}
+{{{indentProp "    " prop=../customFieldDefaultPropName}}}
+    {{else}}
+      {{#if formFieldDisabled}}
+    (Just $ case maybe{{#if ../viewModel.baseModelName}}{{cap ../viewModel.baseModelName}}{{else}}{{cap ../modelName}}{{/if}} of
+      Just {{#if ../viewModel.baseModelName}}{{../viewModel.baseModelName}}{{else}}{{../modelName}}{{/if}} -> Just $ {{#if ../viewModel.baseModelName}}{{../viewModel.baseModelName}}{{else}}{{../modelName}}{{/if}}{{cap propName}} {{#if ../viewModel.baseModelName}}{{../viewModel.baseModelName}}{{else}}{{../modelName}}{{/if}}
+      otherwise -> Nothing
+    )
+      {{else}}
+    ({{#if ../viewModel.baseModelName}}{{../viewModel.baseModelName}}{{else}}v{{../T}}{{cap ../modelName}}{{/if}}{{cap propName}} <$> maybe{{#if ../viewModel.baseModelName}}{{cap ../viewModel.baseModelName}}{{else}}V{{../T}}{{cap ../modelName}}{{/if}})
+      {{/if}}
+    {{/ifProp}}
+  {{/ifProp}}
+{{/filterByPropValues}}
+  let v{{T}}{{cap modelName}}Result = V{{T}}{{cap modelName}}
+        {{#filterByPropValues "propName" formPropNames props}}
+        {{{applFmapDelimPrefix}}}{{propName}}Result
+        {{/filterByPropValues}}
+  let formWidget = $(whamletFile "templates/{{downcase modelName}}_{{t}}_form_fields_gen.hamlet")
+  return (v{{T}}{{cap modelName}}Result, formWidget)
+  where
+{{#filterByPropValues "propName" formPropNames props}}
+    {{propName}}FieldSettings = FieldSettings {
+      fsLabel = "{{propLabel}}",
+      fsTooltip = Nothing,
+      fsId = Just "{{propName}}",
+      fsName = Just "{{propName}}",
+      fsAttrs = [{{#if formFieldDisabled}}("disabled",""){{#if inputAttrs}},{{/if}}{{/if}}{{#each inputAttrs}}("{{key}}","{{value}}"){{commaDelim}}{{/each}}]}
+  {{#if validator}}
+{{{indent "    " validator}}}
+  {{/if}}
+{{/filterByPropValues}}

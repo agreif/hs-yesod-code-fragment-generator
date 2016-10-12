@@ -1,0 +1,14 @@
+{{#if persistModel}}
+{{persistModel.type}}
+  {{#each props}}
+    {{#if isInPersistModel}}
+    {{propName}} {{propType}}{{#unless persistNotNull}} Maybe{{/unless}}{{#if persistDefault}} default={{persistDefault}}{{/if}}
+    {{/if}}
+  {{/each}}
+  {{#each persistModel.uniqueness}}
+    {{this}}
+  {{/each}}
+  {{#each persistModel.deriving}}
+    deriving {{this}}
+  {{/each}}
+{{/if}}

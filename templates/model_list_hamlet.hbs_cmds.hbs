@@ -1,0 +1,5 @@
+{{#if listOverviewProps}}
+hamlet_file=__YESOD_PROJECT_DIR__/templates/{{downcase modelName}}_list_gen.hamlet
+echo "  create file: $hamlet_file"
+cp __GEN_CODE_FILE__ $hamlet_file
+{{/if}}

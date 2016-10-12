@@ -1,0 +1,43 @@
+{{#if addFormProps}}
+{{> view_model_handler_form T="Add" t="add" formPropNames=addFormProps requiredFuncName="requiredOnAdd" additionalFormArgs=viewModel.additionalFormAddArgs customFieldDefaultPropName="customFieldDefaultAdd" customFormFieldBuilderPropName="customFormFieldBuilderAdd"}}
+
+  {{#if generateAddHandlerGET}}
+get{{cap modelName}}AddR :: {{#eachForeignKeyProp props}}{{propType}} -> {{/eachForeignKeyProp}}Handler Html
+get{{cap modelName}}AddR {{#eachForeignKeyProp props}}{{propName}} {{/eachForeignKeyProp}}= do
+  (formWidget, enctype) <- generateFormPost $ vAdd{{cap modelName}}Form Nothing
+  defaultLayout $ do
+    $(widgetFile "{{downcase modelName}}_add_form_gen")
+  {{/if}}
+{{/if}}
+
+{{#if editFormProps}}
+{{> view_model_handler_form T="Edit" t="edit" formPropNames=editFormProps requiredFuncName="requiredOnEdit" additionalFormArgs=viewModel.additionalFormEditArgs customFieldDefaultPropName="customFieldDefaultEdit" customFormFieldBuilderPropName="customFormFieldBuilderEdit"}}
+
+  {{#if generateEditHandlerGET}}
+{{{customEditHandlerGET}}}
+get{{cap modelName}}EditR :: {{cap modelName}}Id -> Handler Html
+get{{cap modelName}}EditR {{modelName}}Id = do
+  {{modelName}} <- runDB $ get404 {{modelName}}Id
+  (formWidget, enctype) <- generateFormPost $ vEdit{{cap modelName}}Form {{#if viewModel.additionalFormEditArgs}}(Just {{modelName}}){{else}}$ Just {{modelName}}{{/if}}{{#each viewModel.additionalFormEditArgs}}{{#if argName}} {{argName}}{{/if}}{{/each}}
+  defaultLayout $ do
+    $(widgetFile "{{downcase modelName}}_edit_form_gen")
+  {{/if}}
+{{/if}}
+
+{{#if generateListHandler}}
+get{{cap modelName}}ListR :: Handler Html
+get{{cap modelName}}ListR = do
+  timeZone <- currentTimeZone
+  {{modelName}}Ents <- runDB $ selectList ([] :: [Filter {{cap modelName}}]) [{{#if listOverviewProps}}{{#filterByPropValuesIfTrue "propName" listOverviewProps props "listOverviewSortDirection"}}{{#if listOverviewSortDirection}}{{listOverviewSortDirection}} {{cap ../modelName}}{{cap propName}}{{commaSpaceDelim}}{{/if}}{{/filterByPropValuesIfTrue}}{{/if}}]
+  {{modelName}}RowEntTuples <- mapM (\ {{modelName}}Ent@(Entity _ {{modelName}}) -> do
+  {{#each listOverviewProps}}
+    {{#ifPropNameIsForeignKey this}}
+                        let {{this}} = {{../../modelName}}{{cap this}} {{../../modelName}}
+                        {{truncateTwoCharsAtEnd this}} <- runDB $ get404 {{this}}
+    {{/ifPropNameIsForeignKey}}
+  {{/each}}
+                        return ({{modelName}}Ent{{#each listOverviewProps}}{{#ifPropNameIsForeignKey this}}, Entity {{this}} {{truncateTwoCharsAtEnd this}}{{/ifPropNameIsForeignKey}}{{/each}})
+                    ) {{modelName}}Ents
+  defaultLayout $ do
+    $(widgetFile "{{downcase modelName}}_list_gen")
+{{/if}}

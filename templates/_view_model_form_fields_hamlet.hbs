@@ -1,0 +1,52 @@
+#{extra}
+{{#filterByPropValues "propName" formPropNames props}}
+  {{#if customFormTemplate}}
+{{{customFormTemplate}}}
+  {{else}}
+    {{#ifValueEquals formFieldFunc equals="hiddenField"}}
+^{fvInput {{propName}}View}
+    {{else}}
+<div .uk-form-row :not $ null $ fvErrors {{propName}}View:.uk-form-danger>
+  <label .uk-form-label for="{{propName}}">{{{propLabel}}}
+  <div .uk-form-controls>
+    ^{fvInput {{propName}}View}
+    $maybe err <- fvErrors {{propName}}View
+      &nbsp;#{err}
+      {{#ifValueEquals formFieldFunc equals="checkBoxField"}}
+        {{#if checkboxLabel}}
+    <label for={{propName}}>&nbsp;&nbsp;{{{checkboxLabel}}}
+        {{/if}}
+      {{/ifValueEquals}}
+    {{/ifValueEquals}}
+  {{/if}}
+{{/filterByPropValues}}
+
+<div .uk-form-row>
+  <div .uk-form-controls>
+    {{#ifValueEquals t equals="add"}}
+    {{#if viewModel.cancelAddRoute}}
+    <a .uk-button href={{#shakespRoute}}{{viewModel.cancelAddRoute}}{{/shakespRoute}}>
+      Abbrechen
+    {{/if}}
+    {{/ifValueEquals}}
+    {{#ifValueEquals t equals="edit"}}
+    {{#if viewModel.cancelEditRoute}}
+    <a .uk-button href={{#shakespRoute}}{{viewModel.cancelEditRoute}}{{/shakespRoute}}>
+      Abbrechen
+    {{/if}}
+    {{/ifValueEquals}}
+    <button .uk-button .uk-button-primary>
+    {{#ifValueEquals t equals="add"}}
+      {{#if viewModel.customLabelSubmitAdd}}
+      {{viewModel.customLabelSubmitAdd}}
+      {{else}}
+      Neuen Eintrag speichern
+      {{/if}}
+    {{/ifValueEquals}}
+    {{#ifValueEquals t equals="edit"}}
+      {{#if viewModel.customLabelSubmitEdit}}
+      {{viewModel.customLabelSubmitEdit}}
+      {{else}}
+      Änderungen speichern
+      {{/if}}
+    {{/ifValueEquals}}

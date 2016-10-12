@@ -1,0 +1,38 @@
+{{#if listOverviewProps}}
+<div .uk-overflow-container>
+  {{#if modelAddRoute}}
+  <a .uk-button .uk-button-primary .uk-float-right href=@{ {{modelAddRoute}} }>
+    <span .uk-icon-plus>
+  {{/if}}
+  <table .uk-table .uk-table-hover .uk-table-striped .uk-table-condensed>
+    <thead>
+      <tr>
+        {{#filterByPropValues "propName" listOverviewProps props}}
+        <th>{{propLabel}}
+        {{/filterByPropValues}}
+    <tbody>
+      $forall (Entity {{modelName}}Id {{modelName}}{{#each listOverviewProps}}{{#ifPropNameIsForeignKey this}}, Entity {{this}} {{truncateTwoCharsAtEnd this}}{{/ifPropNameIsForeignKey}}{{/each}}) <- {{modelName}}RowEntTuples
+        <tr {{#if modelEditRoute}}onclick="window.document.location='{{#shakespRoute}}{{modelEditRoute}} {{modelName}}Id{{/shakespRoute}}';"{{/if}}>
+          {{#filterByPropValues "propName" listOverviewProps props}}
+          <td>
+            {{#ifValueEquals formFieldFunc equals="checkBoxField"}}
+            <span :{{../modelName}}{{cap propName}} {{../modelName}}:.uk-icon-check-square-o :not $ {{../modelName}}{{cap propName}} {{../modelName}}:.uk-icon-square-o>
+            {{else}}
+              {{#ifPropNameIsForeignKey propName}}
+            {{#shakespVariable}}{{#if displayFunc}}{{displayFunc}} $ {{/if}}{{truncateTwoCharsAtEnd propName}}{{/shakespVariable}}
+              {{else}}
+                {{#if isInPersistModel}}
+                  {{#if persistNotNull}}
+            {{#shakespVariable}}{{#if displayFunc}}{{displayFunc}} $ {{/if}}{{../modelName}}{{cap propName}} {{../modelName}}{{/shakespVariable}}
+                  {{else}}
+            $maybe value <- {{../modelName}}{{cap propName}} {{../modelName}}
+              {{#shakespVariable}}{{#if displayFunc}}{{displayFunc}} $ {{/if}}value{{/shakespVariable}}
+                  {{/if}}
+                {{else}}
+            {{#if displayFunc}}{{#shakespVariable}}{{displayFunc}} $ {{../modelName}}{{/shakespVariable}}{{/if}}
+                {{/if}}
+              {{/ifPropNameIsForeignKey}}
+            {{/ifValueEquals}}
+          {{/filterByPropValues}}
+
+{{/if}}

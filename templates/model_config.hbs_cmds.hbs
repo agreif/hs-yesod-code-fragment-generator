@@ -1,0 +1,20 @@
+{{#if persistModel}}
+replace_start="-- generated start - {{modelName}}"
+replace_end="-- generated end - {{modelName}}"
+
+models_file=__YESOD_PROJECT_DIR__/config/models
+echo "  update file: $models_file"
+if test ! -f $models_file; then
+    touch $models_file
+fi
+grep -q -- "$replace_start" $models_file
+if test $? -ne 0; then
+    cat >> $models_file <<EOF
+$replace_start
+$replace_end
+EOF
+fi
+
+sed -i '' -e "/$replace_start/,/$replace_end/{//p;d;}" $models_file
+sed -i '' -e "/$replace_start/ r __GEN_CODE_FILE__" $models_file
+{{/if}}
