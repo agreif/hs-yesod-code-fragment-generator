@@ -7,11 +7,18 @@ if test $# -ne 2; then
     exit 1
 fi
 
+checkError() {
+    if test $? -ne 0; then
+        exit 1
+    fi
+}
+
 for p in handlebars \
          handlebars-helpers; do
     if test ! -d node_modules/$p; then
         echo "npm install $p"
         npm install $p
+        checkError
     fi
 done
 
@@ -19,6 +26,7 @@ if test ! -d hs-yaml2json/.stack-work; then
     cd hs-yaml2json
     echo "stack build"
     stack build
+    checkError
     cd -
 fi
 
