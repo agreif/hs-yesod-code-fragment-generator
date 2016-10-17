@@ -5,7 +5,7 @@
 get{{cap modelName}}AddR :: {{#eachForeignKeyProp props}}{{propType}} -> {{/eachForeignKeyProp}}Handler Html
 get{{cap modelName}}AddR {{#eachForeignKeyProp props}}{{propName}} {{/eachForeignKeyProp}}= do
   (formWidget, enctype) <- generateFormPost $ vAdd{{cap modelName}}Form Nothing
-  defaultLayout $ do
+  {{addHandlerLayout}} $ do
     $(widgetFile "{{downcase modelName}}_add_form_gen")
   {{/if}}
 {{/if}}
@@ -19,7 +19,7 @@ get{{cap modelName}}EditR :: {{cap modelName}}Id -> Handler Html
 get{{cap modelName}}EditR {{modelName}}Id = do
   {{modelName}} <- runDB $ get404 {{modelName}}Id
   (formWidget, enctype) <- generateFormPost $ vEdit{{cap modelName}}Form {{#if viewModel.additionalFormEditArgs}}(Just {{modelName}}){{else}}$ Just {{modelName}}{{/if}}{{#each viewModel.additionalFormEditArgs}}{{#if argName}} {{argName}}{{/if}}{{/each}}
-  defaultLayout $ do
+  {{editHandlerLayout}} $ do
     $(widgetFile "{{downcase modelName}}_edit_form_gen")
   {{/if}}
 {{/if}}
@@ -38,6 +38,6 @@ get{{cap modelName}}ListR = do
   {{/each}}
                         return ({{modelName}}Ent{{#each listOverviewProps}}{{#ifPropNameIsForeignKey this}}, Entity {{this}} {{truncateTwoCharsAtEnd this}}{{/ifPropNameIsForeignKey}}{{/each}})
                     ) {{modelName}}Ents
-  defaultLayout $ do
+  {{listHandlerLayout}} $ do
     $(widgetFile "{{downcase modelName}}_list_gen")
 {{/if}}
