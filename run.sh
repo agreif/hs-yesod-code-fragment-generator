@@ -63,7 +63,7 @@ generateCode() {
     $handlebars $template_file $data_file_json > $shell_cmds_file
     sed -e "s:__GEN_CODE_FILE__:`pwd`/$gen_code_file:g" \
         -e "s:__YESOD_PROJECT_DIR__:$yesod_project_dir:g" \
-        -i'' \
+        -i '' \
         $shell_cmds_file
 }
 

@@ -17,7 +17,7 @@ $replace_end
 EOF
 fi
 
-sed -i '' -e "/$replace_start/,/$replace_end/{//p;d;}" $handler_file
-sed -i '' -e "/$replace_start/ r __GEN_CODE_FILE__" $handler_file
+sed -e "/$replace_start/,/$replace_end/{//p;d;}" -i '' $handler_file
+sed -e "/$replace_start/ r __GEN_CODE_FILE__" -i '' $handler_file
   {{/if}}
 {{/with}}
