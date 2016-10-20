@@ -46,6 +46,12 @@ if test ! -d $templates_dir; then
     mkdir $templates_dir
 fi
 
+if test `uname` = 'Darwin'; then
+    sed_inplace="-i''"
+else
+    sed_inplace="-i ''"
+fi
+
 generateCode() {
     data_filename=$1
     template_filename=$2
@@ -63,7 +69,7 @@ generateCode() {
     $handlebars $template_file $data_file_json > $shell_cmds_file
     sed -e "s:__GEN_CODE_FILE__:`pwd`/$gen_code_file:g" \
         -e "s:__YESOD_PROJECT_DIR__:$yesod_project_dir:g" \
-        -i '' \
+        $sed_inplace \
         $shell_cmds_file
 }
 
