@@ -61,9 +61,9 @@ generateCode() {
     template_file=${template_file}_cmds.hbs
     shell_cmds_file=${gen_code_file}_cmds.sh
     $handlebars $template_file $data_file_json > $shell_cmds_file
-    sed -i '' \
-        -e "s:__GEN_CODE_FILE__:`pwd`/$gen_code_file:g" \
+    sed -e "s:__GEN_CODE_FILE__:`pwd`/$gen_code_file:g" \
         -e "s:__YESOD_PROJECT_DIR__:$yesod_project_dir:g" \
+        -i'' \
         $shell_cmds_file
 }
 
