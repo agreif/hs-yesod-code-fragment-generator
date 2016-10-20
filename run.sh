@@ -7,6 +7,8 @@ if test $# -ne 2; then
     exit 1
 fi
 
+parallel=1
+
 checkError() {
     if test $? -ne 0; then
         exit 1
@@ -46,6 +48,12 @@ if test ! -d $templates_dir; then
     mkdir $templates_dir
 fi
 
+checkError() {
+    if test $? -ne 0; then
+        exit 1
+    fi
+}
+
 generateCode() {
     data_filename=$1
     template_filename=$2
@@ -67,13 +75,8 @@ generateCode() {
         $shell_cmds_file
 }
 
-checkError() {
-    if test $? -ne 0; then
-        exit 1
-    fi
-}
-
-for data_file in $data_files_dir/*; do
+processDataFile() {
+    data_file=$1
     echo "generate code: $data_file ..."
     data_filename=`basename $data_file`
     if echo "$data_file" | grep -q "/modelWithView_"; then
@@ -93,18 +96,21 @@ for data_file in $data_files_dir/*; do
         generateCode $data_filename model_list_hamlet.hbs html
         checkError
     fi
-done
+}
 
 # remove not needed files that may be replaced
-
 rm $yesod_project_dir/templates/*_gen.hamlet
 
-# for f in ; do
-#     if test -f $f; then
-#         echo "delete file: $f"
-#         rm $f
-#     fi
-# done
+for data_file in $data_files_dir/*; do
+    if test $parallel -eq 1; then
+        processDataFile $data_file &
+    else
+        processDataFile $data_file
+    fi
+done
+
+# wait for all background processes to finish
+wait
 
 for cmd_file in $tmp_dir/*.sh; do
     echo "update project: $cmd_file ..."
