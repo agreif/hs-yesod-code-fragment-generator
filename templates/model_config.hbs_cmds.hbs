@@ -15,6 +15,7 @@ $replace_end
 EOF
 fi
 
-sed -e "/$replace_start/,/$replace_end/{//p;d;}" -i '' $models_file
-sed -e "/$replace_start/ r __GEN_CODE_FILE__" -i '' $models_file
+sed -e "/$replace_start/,/$replace_end/{//p;d;}" -i'.tmp' $models_file
+sed -e "/$replace_start/ r __GEN_CODE_FILE__" -i'.tmp' $models_file
+rm $models_file.tmp
 {{/if}}
