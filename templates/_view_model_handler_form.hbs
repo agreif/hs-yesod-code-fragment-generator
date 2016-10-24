@@ -20,7 +20,7 @@ v{{T}}{{cap modelName}}Form maybe{{#if viewModel.baseModelName}}{{cap viewModel.
     {{#ifProp prop=../customFieldDefaultPropName}}
 {{{indentProp "    " prop=../customFieldDefaultPropName}}}
     {{else}}
-      {{#if formFieldDisabled}}
+      {{#if isFormFieldDisabled}}
     (Just $ case maybe{{#if ../viewModel.baseModelName}}{{cap ../viewModel.baseModelName}}{{else}}{{cap ../modelName}}{{/if}} of
       Just {{#if ../viewModel.baseModelName}}{{../viewModel.baseModelName}}{{else}}{{../modelName}}{{/if}} -> Just $ {{#if ../viewModel.baseModelName}}{{../viewModel.baseModelName}}{{else}}{{../modelName}}{{/if}}{{cap propName}} {{#if ../viewModel.baseModelName}}{{../viewModel.baseModelName}}{{else}}{{../modelName}}{{/if}}
       otherwise -> Nothing
@@ -44,7 +44,7 @@ v{{T}}{{cap modelName}}Form maybe{{#if viewModel.baseModelName}}{{cap viewModel.
       fsTooltip = Nothing,
       fsId = Just "{{propName}}",
       fsName = Just "{{propName}}",
-      fsAttrs = [{{#if formFieldDisabled}}("disabled",""){{#if inputAttrs}},{{/if}}{{/if}}{{#each inputAttrs}}("{{key}}","{{value}}"){{commaDelim}}{{/each}}]}
+      fsAttrs = [{{#if isFormFieldDisabled}}("disabled",""){{#if inputAttrs}},{{/if}}{{/if}}{{#each inputAttrs}}("{{key}}","{{value}}"){{commaDelim}}{{/each}}]}
   {{#if validator}}
 {{{indent "    " validator}}}
   {{/if}}
