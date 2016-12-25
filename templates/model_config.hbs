@@ -11,4 +11,15 @@
   {{#each persistModel.deriving}}
     deriving {{this}}
   {{/each}}
+
+  {{#if persistModel.isVersioned}}
+{{persistModel.type}}Version
+    Id sql=vid
+    id Int MigrationOnly
+  {{#each props}}
+    {{#if isInPersistModel}}
+    {{propName}} {{propType}}{{#unless persistNotNull}} Maybe{{/unless}}{{#if persistDefault}} default={{persistDefault}}{{/if}}
+    {{/if}}
+  {{/each}}
+  {{/if}}
 {{/if}}
