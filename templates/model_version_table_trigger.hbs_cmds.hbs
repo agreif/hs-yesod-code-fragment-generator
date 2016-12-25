@@ -1,0 +1,21 @@
+{{#if persistModel}}
+replace_start="-- generated start - {{modelName}}"
+replace_end="-- generated end - {{modelName}}"
+
+sql_file=__YESOD_PROJECT_DIR__/../postgresql_setup.sql
+echo "  update file: $sql_file"
+if test ! -f $sql_file; then
+    touch $sql_file
+fi
+grep -q -- "$replace_start" $sql_file
+if test $? -ne 0; then
+    cat >> $sql_file <<EOF
+$replace_start
+$replace_end
+EOF
+fi
+
+sed -e "/$replace_start/,/$replace_end/{//p;d;}" -i'.tmp' $sql_file
+sed -e "/$replace_start/ r __GEN_CODE_FILE__" -i'.tmp' $sql_file
+rm $sql_file.tmp
+{{/if}}

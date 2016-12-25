@@ -1,0 +1,6 @@
+{{#if persistModel}}
+drop trigger if exists audit_{{underscore modelName}} on public.{{underscore modelName}};
+  {{#if persistModel.isVersioned}}
+create trigger audit_{{underscore modelName}} after insert or update on public.{{underscore modelName}} for each row execute procedure public.process_audit_table();
+  {{/if}}
+{{/if}}

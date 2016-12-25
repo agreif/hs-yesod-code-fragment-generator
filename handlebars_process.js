@@ -14,6 +14,11 @@ var data_file = process.argv[3];
 
 
 
+// {{underscore value}}
+handlebars.registerHelper('underscore', function(text) {
+    return text.replace(/\.?([A-Z])/g, function (x,y){return "_" + y.toLowerCase()}).replace(/^_/, "");
+})
+
 // {{cap value}}
 handlebars.registerHelper('cap', function(text) {
     var words = text.split(' ');

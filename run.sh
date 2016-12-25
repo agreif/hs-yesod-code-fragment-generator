@@ -95,6 +95,8 @@ processDataFile() {
         checkError
         generateCode $data_filename model_list_hamlet.hbs html
         checkError
+        generateCode $data_filename model_version_table_trigger.hbs sql
+        checkError
     fi
 }
 
