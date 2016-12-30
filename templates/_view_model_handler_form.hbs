@@ -20,14 +20,7 @@ v{{T}}{{cap modelName}}Form maybe{{#if viewModel.baseModelName}}{{cap viewModel.
     {{#ifProp prop=../customFieldDefaultPropName}}
 {{{indentProp "    " prop=../customFieldDefaultPropName}}}
     {{else}}
-      {{#if isFormFieldDisabled}}
-    (Just $ case maybe{{#if ../viewModel.baseModelName}}{{cap ../viewModel.baseModelName}}{{else}}{{cap ../modelName}}{{/if}} of
-      Just {{#if ../viewModel.baseModelName}}{{../viewModel.baseModelName}}{{else}}{{../modelName}}{{/if}} -> Just $ {{#if ../viewModel.baseModelName}}{{../viewModel.baseModelName}}{{else}}{{../modelName}}{{/if}}{{cap propName}} {{#if ../viewModel.baseModelName}}{{../viewModel.baseModelName}}{{else}}{{../modelName}}{{/if}}
-      otherwise -> Nothing
-    )
-      {{else}}
-    ({{#if ../viewModel.baseModelName}}{{../viewModel.baseModelName}}{{else}}v{{../T}}{{cap ../modelName}}{{/if}}{{cap propName}} <$> maybe{{#if ../viewModel.baseModelName}}{{cap ../viewModel.baseModelName}}{{else}}V{{../T}}{{cap ../modelName}}{{/if}})
-      {{/if}}
+    ({{#if isFormFieldDisabled}}Just $ {{/if}}{{#if ../viewModel.baseModelName}}{{../viewModel.baseModelName}}{{else}}v{{../T}}{{cap ../modelName}}{{/if}}{{cap propName}} <$> maybe{{#if ../viewModel.baseModelName}}{{cap ../viewModel.baseModelName}}{{else}}V{{../T}}{{cap ../modelName}}{{/if}})
     {{/ifProp}}
   {{/ifProp}}
 {{/filterByPropValues}}
