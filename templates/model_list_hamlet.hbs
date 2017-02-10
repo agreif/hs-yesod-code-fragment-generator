@@ -1,16 +1,16 @@
 {{#if listOverviewProps}}
-<div .uk-overflow-container>
+<div .uk-overflow-auto>
   {{#if modelAddRoute}}
     {{#if listAddButtonConditionFunc}}
   $if {{listAddButtonConditionFunc}}
     <a .uk-button .uk-button-primary .uk-float-right href=@{ {{modelAddRoute}} }>
-      <span .uk-icon-plus>
+      <span uk-icon="icon: plus-circle">+
     {{else}}
   <a .uk-button .uk-button-primary .uk-float-right href=@{ {{modelAddRoute}} }>
-    <span .uk-icon-plus>
+    <span uk-icon="icon: plus-circle">+
     {{/if}}
   {{/if}}
-  <table .uk-table {{#if modelEditRoute}}{{#if listEditConditionFunc}}:{{listEditConditionFunc}}:{{/if}}.uk-table-hover{{/if}} .uk-table-striped .uk-table-condensed>
+  <table .uk-table {{#if modelEditRoute}}{{#if listEditConditionFunc}}:{{listEditConditionFunc}}:{{/if}}.uk-table-hover{{/if}} .uk-table-striped .uk-table-small>
     <thead>
       <tr>
         {{#filterByPropValues "propName" listOverviewProps props}}
@@ -25,7 +25,8 @@
             {{#if isListColumnDisplayed}}
           <td>
             {{#ifValueEquals formFieldFunc equals="checkBoxField"}}
-            <span :{{../modelName}}{{cap propName}} {{../modelName}}:.uk-icon-check-square-o :not $ {{../modelName}}{{cap propName}} {{../modelName}}:.uk-icon-square-o>
+            $if {{../modelName}}{{cap propName}} {{../modelName}}
+              <span uk-icon="icon: check">ja
             {{else}}
               {{#ifPropNameIsForeignKey propName}}
             {{#shakespVariable}}{{#if customDisplayFunc}}{{customDisplayFunc}}{{else}}{{../modelName}}{{truncateTwoCharsAtEnd propName}} {{../modelName}}{{/if}}{{/shakespVariable}}
