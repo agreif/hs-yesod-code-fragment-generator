@@ -35,8 +35,12 @@
                   {{#if persistNotNull}}
             {{#shakespVariable}}{{#if customDisplayFunc}}{{customDisplayFunc}}{{else}}{{../modelName}}{{cap propName}} {{../modelName}}{{/if}}{{/shakespVariable}}
                   {{else}}
+                    {{#if customDisplayFunc}}
+            {{#shakespVariable}}{{customDisplayFunc}}{{/shakespVariable}}
+                    {{else}}
             $maybe value <- {{../modelName}}{{cap propName}} {{../modelName}}
-              {{#shakespVariable}}{{#if customDisplayFunc}}{{customDisplayFunc}}{{else}}value{{/if}}{{/shakespVariable}}
+              {{#shakespVariable}}value{{/shakespVariable}}
+                    {{/if}}
                   {{/if}}
                 {{else}}
             {{#shakespVariable}}{{#if customDisplayFunc}}{{customDisplayFunc}}{{else}}{{../modelName}}{{cap propName}} {{../modelName}}{{/if}}{{/shakespVariable}}
