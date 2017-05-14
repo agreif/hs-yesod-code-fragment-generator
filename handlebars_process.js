@@ -19,6 +19,11 @@ handlebars.registerHelper('underscore', function(text) {
     return text.replace(/\.?([A-Z])/g, function (x,y){return "_" + y.toLowerCase()}).replace(/^_/, "");
 })
 
+// {{kebabcase value}}
+handlebars.registerHelper('kebabcase', function(text) {
+    return text.replace(/\.?([A-Z])/g, function (x,y){return "-" + y.toLowerCase()}).replace(/^-/, "");
+})
+
 // {{cap value}}
 handlebars.registerHelper('cap', function(text) {
     var words = text.split(' ');
