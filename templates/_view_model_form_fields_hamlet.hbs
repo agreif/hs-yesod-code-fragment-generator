@@ -24,13 +24,13 @@
 <div .uk-form-controls>
   {{#ifValueEquals t equals="add"}}
   {{#if viewModel.cancelAddRoute}}
-  <a .uk-button href={{#shakespRoute}}{{viewModel.cancelAddRoute}}{{/shakespRoute}}>
+  <a .uk-button .uk-button-default href={{#shakespRoute}}{{viewModel.cancelAddRoute}}{{/shakespRoute}}>
     Abbrechen
   {{/if}}
   {{/ifValueEquals}}
   {{#ifValueEquals t equals="edit"}}
   {{#if viewModel.cancelEditRoute}}
-  <a .uk-button href={{#shakespRoute}}{{viewModel.cancelEditRoute}}{{/shakespRoute}}>
+  <a .uk-button .uk-button-default href={{#shakespRoute}}{{viewModel.cancelEditRoute}}{{/shakespRoute}}>
     Abbrechen
   {{/if}}
   {{/ifValueEquals}}

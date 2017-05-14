@@ -1,6 +1,24 @@
 {{#if persistModel}}
-drop trigger if exists audit_{{underscore modelName}} on public.{{underscore modelName}};
   {{#if persistModel.isVersioned}}
-create trigger audit_{{underscore modelName}} after insert or update on public.{{underscore modelName}} for each row execute procedure public.process_audit_table();
+drop function public.process_audit_{{underscore modelName}}() cascade;
+create or replace function public.process_audit_{{underscore modelName}}()
+ returns trigger
+ language plpgsql
+as $function$
+   begin
+       if to_regclass('{{underscore modelName}}_version') is not null then
+           if (TG_OP = 'UPDATE' or TG_OP = 'INSERT') then
+                insert into {{underscore modelName}}_version
+                       (id, {{#each props}}{{#if isInPersistModel}}{{underscore propName}}{{commaSpaceDelim}}{{/if}}{{/each}})
+                       values
+                       (new.id, {{#each props}}{{#if isInPersistModel}}new.{{underscore propName}}{{commaSpaceDelim}}{{/if}}{{/each}});
+                return new;
+            end if;
+       end if;
+       return null; -- result is ignored since this is an after trigger
+    end;
+$function$;
+
+create trigger audit_{{underscore modelName}} after insert or update on public.{{underscore modelName}} for each row execute procedure public.process_audit_{{underscore modelName}}();
   {{/if}}
 {{/if}}
