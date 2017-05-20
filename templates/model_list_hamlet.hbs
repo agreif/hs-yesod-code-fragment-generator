@@ -1,15 +1,5 @@
 {{#if listOverviewProps}}
 <div .uk-overflow-auto>
-  {{#if modelAddRoute}}
-    {{#if listAddButtonConditionFunc}}
-  $if {{listAddButtonConditionFunc}}
-    <a .uk-button .uk-button-primary .uk-float-right href=@{ {{modelAddRoute}} }>
-      <span uk-icon="icon: plus-circle">
-    {{else}}
-  <a .uk-button .uk-button-primary .uk-float-right href=@{ {{modelAddRoute}} }>
-    <span uk-icon="icon: plus-circle">
-    {{/if}}
-  {{/if}}
   <table .uk-table {{#if modelEditRoute}}{{#if listEditConditionFunc}}:{{listEditConditionFunc}}:{{/if}}.uk-table-hover{{/if}} .uk-table-striped .uk-table-small>
     <thead>
       <tr>
@@ -18,35 +8,158 @@
         <th>{{propLabel}}
           {{/if}}
         {{/filterByPropValues}}
+
+        <th>
+        {{#if modelAddRoute}}
+          {{#if listAddButtonConditionFunc}}
+          $if {{listAddButtonConditionFunc}}
+            <a .uk-button .uk-button-primary .uk-float-right href={{#shakespRoute}}{{modelAddRoute}}{{/shakespRoute}}>
+              <span uk-icon="icon: plus-circle">
+          {{else}}
+          <a .uk-button .uk-button-primary .uk-float-right href={{#shakespRoute}}{{modelAddRoute}}{{/shakespRoute}}>
+            <span uk-icon="icon: plus-circle">
+          {{/if}}
+        {{/if}}
+
+
+
+
+
     <tbody>
       $forall (Entity {{modelName}}Id {{modelName}}{{#each listOverviewProps}}{{#ifPropNameIsForeignKey this}}, Entity {{this}} {{truncateTwoCharsAtEnd this}}{{/ifPropNameIsForeignKey}}{{/each}}) <- {{modelName}}RowEntTuples
-        <tr {{#if modelEditRoute}}{{#if listEditConditionFunc}}:{{listEditConditionFunc}}:{{/if}}onclick="window.document.location='{{#shakespRoute}}{{modelEditRoute}} {{modelName}}Id{{/shakespRoute}}';"{{/if}}>
+        <tr>
           {{#filterByPropValues "propName" listOverviewProps props}}
             {{#if isListColumnDisplayed}}
+
+              {{#if ../modelEditRoute}}
+
+                {{#if ../listEditConditionFunc}}
+
+          $if {{../listEditConditionFunc}}
+            <td .uk-table-link>
+              <a .uk-link-reset href={{#shakespRoute}}{{../modelEditRoute}} {{../modelName}}Id{{/shakespRoute}}>
+                  {{#ifValueEquals formFieldFunc equals="checkBoxField"}}
+                $if {{../modelName}}{{cap propName}} {{../modelName}}
+                  <span uk-icon="icon: check">
+                  {{else}}
+                    {{#ifPropNameIsForeignKey propName}}
+                {{#shakespVariable}}{{#if customDisplayFunc}}{{customDisplayFunc}}{{else}}{{../modelName}}{{truncateTwoCharsAtEnd propName}} {{../modelName}}{{/if}}{{/shakespVariable}}
+                    {{else}}
+                      {{#if isInPersistModel}}
+                        {{#if persistNotNull}}
+                {{#shakespVariable}}{{#if customDisplayFunc}}{{customDisplayFunc}}{{else}}{{../modelName}}{{cap propName}} {{../modelName}}{{/if}}{{/shakespVariable}}
+                        {{else}}
+                          {{#if customDisplayFunc}}
+                {{#shakespVariable}}{{customDisplayFunc}}{{/shakespVariable}}
+                          {{else}}
+                $maybe value <- {{../modelName}}{{cap propName}} {{../modelName}}
+                  {{#shakespVariable}}value{{/shakespVariable}}
+                          {{/if}}
+                        {{/if}}
+                      {{else}}
+                {{#shakespVariable}}{{#if customDisplayFunc}}{{customDisplayFunc}}{{else}}{{../modelName}}{{cap propName}} {{../modelName}}{{/if}}{{/shakespVariable}}
+                      {{/if}}
+                    {{/ifPropNameIsForeignKey}}
+                  {{/ifValueEquals}}
+          $else
+            <td>
+                  {{#ifValueEquals formFieldFunc equals="checkBoxField"}}
+              $if {{../modelName}}{{cap propName}} {{../modelName}}
+                <span uk-icon="icon: check">
+                  {{else}}
+                    {{#ifPropNameIsForeignKey propName}}
+              {{#shakespVariable}}{{#if customDisplayFunc}}{{customDisplayFunc}}{{else}}{{../modelName}}{{truncateTwoCharsAtEnd propName}} {{../modelName}}{{/if}}{{/shakespVariable}}
+                    {{else}}
+                      {{#if isInPersistModel}}
+                        {{#if persistNotNull}}
+              {{#shakespVariable}}{{#if customDisplayFunc}}{{customDisplayFunc}}{{else}}{{../modelName}}{{cap propName}} {{../modelName}}{{/if}}{{/shakespVariable}}
+                        {{else}}
+                          {{#if customDisplayFunc}}
+              {{#shakespVariable}}{{customDisplayFunc}}{{/shakespVariable}}
+                          {{else}}
+              $maybe value <- {{../modelName}}{{cap propName}} {{../modelName}}
+                {{#shakespVariable}}value{{/shakespVariable}}
+                          {{/if}}
+                        {{/if}}
+                      {{else}}
+              {{#shakespVariable}}{{#if customDisplayFunc}}{{customDisplayFunc}}{{else}}{{../modelName}}{{cap propName}} {{../modelName}}{{/if}}{{/shakespVariable}}
+                      {{/if}}
+                    {{/ifPropNameIsForeignKey}}
+                  {{/ifValueEquals}}
+
+
+                {{else}}    
+
+          <td .uk-table-link>
+            <a .uk-link-reset href={{#shakespRoute}}{{../modelEditRoute}} {{../modelName}}Id{{/shakespRoute}}>
+                  {{#ifValueEquals formFieldFunc equals="checkBoxField"}}
+              $if {{../modelName}}{{cap propName}} {{../modelName}}
+                <span uk-icon="icon: check">
+                  {{else}}
+                    {{#ifPropNameIsForeignKey propName}}
+              {{#shakespVariable}}{{#if customDisplayFunc}}{{customDisplayFunc}}{{else}}{{../modelName}}{{truncateTwoCharsAtEnd propName}} {{../modelName}}{{/if}}{{/shakespVariable}}
+                    {{else}}
+                      {{#if isInPersistModel}}
+                        {{#if persistNotNull}}
+              {{#shakespVariable}}{{#if customDisplayFunc}}{{customDisplayFunc}}{{else}}{{../modelName}}{{cap propName}} {{../modelName}}{{/if}}{{/shakespVariable}}
+                        {{else}}
+                          {{#if customDisplayFunc}}
+              {{#shakespVariable}}{{customDisplayFunc}}{{/shakespVariable}}
+                          {{else}}
+              $maybe value <- {{../modelName}}{{cap propName}} {{../modelName}}
+                {{#shakespVariable}}value{{/shakespVariable}}
+                          {{/if}}
+                        {{/if}}
+                      {{else}}
+              {{#shakespVariable}}{{#if customDisplayFunc}}{{customDisplayFunc}}{{else}}{{../modelName}}{{cap propName}} {{../modelName}}{{/if}}{{/shakespVariable}}
+                      {{/if}}
+                    {{/ifPropNameIsForeignKey}}
+                  {{/ifValueEquals}}
+
+                {{/if}}    
+
+
+              {{else}}
+
           <td>
-            {{#ifValueEquals formFieldFunc equals="checkBoxField"}}
+                {{#ifValueEquals formFieldFunc equals="checkBoxField"}}
             $if {{../modelName}}{{cap propName}} {{../modelName}}
               <span uk-icon="icon: check">
-            {{else}}
-              {{#ifPropNameIsForeignKey propName}}
+                {{else}}
+                  {{#ifPropNameIsForeignKey propName}}
             {{#shakespVariable}}{{#if customDisplayFunc}}{{customDisplayFunc}}{{else}}{{../modelName}}{{truncateTwoCharsAtEnd propName}} {{../modelName}}{{/if}}{{/shakespVariable}}
-              {{else}}
-                {{#if isInPersistModel}}
-                  {{#if persistNotNull}}
-            {{#shakespVariable}}{{#if customDisplayFunc}}{{customDisplayFunc}}{{else}}{{../modelName}}{{cap propName}} {{../modelName}}{{/if}}{{/shakespVariable}}
                   {{else}}
-                    {{#if customDisplayFunc}}
+                    {{#if isInPersistModel}}
+                      {{#if persistNotNull}}
+            {{#shakespVariable}}{{#if customDisplayFunc}}{{customDisplayFunc}}{{else}}{{../modelName}}{{cap propName}} {{../modelName}}{{/if}}{{/shakespVariable}}
+                      {{else}}
+                        {{#if customDisplayFunc}}
             {{#shakespVariable}}{{customDisplayFunc}}{{/shakespVariable}}
-                    {{else}}
+                        {{else}}
             $maybe value <- {{../modelName}}{{cap propName}} {{../modelName}}
               {{#shakespVariable}}value{{/shakespVariable}}
-                    {{/if}}
-                  {{/if}}
-                {{else}}
+                        {{/if}}
+                      {{/if}}
+                    {{else}}
             {{#shakespVariable}}{{#if customDisplayFunc}}{{customDisplayFunc}}{{else}}{{../modelName}}{{cap propName}} {{../modelName}}{{/if}}{{/shakespVariable}}
-                {{/if}}
-              {{/ifPropNameIsForeignKey}}
-            {{/ifValueEquals}}
-          {{/if}}
+                    {{/if}}
+                  {{/ifPropNameIsForeignKey}}
+                {{/ifValueEquals}}
+
+
+              {{/if}}
+
+            {{/if}}
           {{/filterByPropValues}}
+
+          <td>
+          {{#if modelDeleteRoute}}
+            <form .uk-float-right action={{#shakespRoute}}{{modelDeleteRoute}} {{modelName}}Id{{/shakespRoute}} method=get onsubmit="return confirm('Wirklich loeschen?');">
+              <button .uk-button .uk-button-default>
+                <span uk-icon="icon: trash">
+          {{/if}}
+
+
+
+
 {{/if}}
