@@ -38,114 +38,23 @@
           $if {{../listEditConditionFunc}}
             <td .uk-table-link>
               <a .uk-link-reset href={{#shakespRoute}}{{../modelEditRoute}} {{../modelName}}Id{{/shakespRoute}}>
-                  {{#ifValueEquals formFieldFunc equals="checkBoxField"}}
-                $if {{../modelName}}{{cap propName}} {{../modelName}}
-                  <span uk-icon="icon: check">
-                  {{else}}
-                    {{#ifPropNameIsForeignKey propName}}
-                {{#shakespVariable}}{{#if customDisplayFunc}}{{customDisplayFunc}}{{else}}{{../modelName}}{{truncateTwoCharsAtEnd propName}} {{../modelName}}{{/if}}{{/shakespVariable}}
-                    {{else}}
-                      {{#if isInPersistModel}}
-                        {{#if persistNotNull}}
-                {{#shakespVariable}}{{#if customDisplayFunc}}{{customDisplayFunc}}{{else}}{{../modelName}}{{cap propName}} {{../modelName}}{{/if}}{{/shakespVariable}}
-                        {{else}}
-                          {{#if customDisplayFunc}}
-                {{#shakespVariable}}{{customDisplayFunc}}{{/shakespVariable}}
-                          {{else}}
-                $maybe value <- {{../modelName}}{{cap propName}} {{../modelName}}
-                  {{#shakespVariable}}value{{/shakespVariable}}
-                          {{/if}}
-                        {{/if}}
-                      {{else}}
-                {{#shakespVariable}}{{#if customDisplayFunc}}{{customDisplayFunc}}{{else}}{{../modelName}}{{cap propName}} {{../modelName}}{{/if}}{{/shakespVariable}}
-                      {{/if}}
-                    {{/ifPropNameIsForeignKey}}
-                  {{/ifValueEquals}}
+{{> model_list_table_data parent=..}}
           $else
             <td>
-                  {{#ifValueEquals formFieldFunc equals="checkBoxField"}}
-              $if {{../modelName}}{{cap propName}} {{../modelName}}
-                <span uk-icon="icon: check">
-                  {{else}}
-                    {{#ifPropNameIsForeignKey propName}}
-              {{#shakespVariable}}{{#if customDisplayFunc}}{{customDisplayFunc}}{{else}}{{../modelName}}{{truncateTwoCharsAtEnd propName}} {{../modelName}}{{/if}}{{/shakespVariable}}
-                    {{else}}
-                      {{#if isInPersistModel}}
-                        {{#if persistNotNull}}
-              {{#shakespVariable}}{{#if customDisplayFunc}}{{customDisplayFunc}}{{else}}{{../modelName}}{{cap propName}} {{../modelName}}{{/if}}{{/shakespVariable}}
-                        {{else}}
-                          {{#if customDisplayFunc}}
-              {{#shakespVariable}}{{customDisplayFunc}}{{/shakespVariable}}
-                          {{else}}
-              $maybe value <- {{../modelName}}{{cap propName}} {{../modelName}}
-                {{#shakespVariable}}value{{/shakespVariable}}
-                          {{/if}}
-                        {{/if}}
-                      {{else}}
-              {{#shakespVariable}}{{#if customDisplayFunc}}{{customDisplayFunc}}{{else}}{{../modelName}}{{cap propName}} {{../modelName}}{{/if}}{{/shakespVariable}}
-                      {{/if}}
-                    {{/ifPropNameIsForeignKey}}
-                  {{/ifValueEquals}}
+{{> model_list_table_data parent=..}}
 
-
-                {{else}}    
+                {{else}}
 
           <td .uk-table-link>
             <a .uk-link-reset href={{#shakespRoute}}{{../modelEditRoute}} {{../modelName}}Id{{/shakespRoute}}>
-                  {{#ifValueEquals formFieldFunc equals="checkBoxField"}}
-              $if {{../modelName}}{{cap propName}} {{../modelName}}
-                <span uk-icon="icon: check">
-                  {{else}}
-                    {{#ifPropNameIsForeignKey propName}}
-              {{#shakespVariable}}{{#if customDisplayFunc}}{{customDisplayFunc}}{{else}}{{../modelName}}{{truncateTwoCharsAtEnd propName}} {{../modelName}}{{/if}}{{/shakespVariable}}
-                    {{else}}
-                      {{#if isInPersistModel}}
-                        {{#if persistNotNull}}
-              {{#shakespVariable}}{{#if customDisplayFunc}}{{customDisplayFunc}}{{else}}{{../modelName}}{{cap propName}} {{../modelName}}{{/if}}{{/shakespVariable}}
-                        {{else}}
-                          {{#if customDisplayFunc}}
-              {{#shakespVariable}}{{customDisplayFunc}}{{/shakespVariable}}
-                          {{else}}
-              $maybe value <- {{../modelName}}{{cap propName}} {{../modelName}}
-                {{#shakespVariable}}value{{/shakespVariable}}
-                          {{/if}}
-                        {{/if}}
-                      {{else}}
-              {{#shakespVariable}}{{#if customDisplayFunc}}{{customDisplayFunc}}{{else}}{{../modelName}}{{cap propName}} {{../modelName}}{{/if}}{{/shakespVariable}}
-                      {{/if}}
-                    {{/ifPropNameIsForeignKey}}
-                  {{/ifValueEquals}}
+{{> model_list_table_data parent=..}}
 
-                {{/if}}    
-
+                {{/if}}
 
               {{else}}
 
           <td>
-                {{#ifValueEquals formFieldFunc equals="checkBoxField"}}
-            $if {{../modelName}}{{cap propName}} {{../modelName}}
-              <span uk-icon="icon: check">
-                {{else}}
-                  {{#ifPropNameIsForeignKey propName}}
-            {{#shakespVariable}}{{#if customDisplayFunc}}{{customDisplayFunc}}{{else}}{{../modelName}}{{truncateTwoCharsAtEnd propName}} {{../modelName}}{{/if}}{{/shakespVariable}}
-                  {{else}}
-                    {{#if isInPersistModel}}
-                      {{#if persistNotNull}}
-            {{#shakespVariable}}{{#if customDisplayFunc}}{{customDisplayFunc}}{{else}}{{../modelName}}{{cap propName}} {{../modelName}}{{/if}}{{/shakespVariable}}
-                      {{else}}
-                        {{#if customDisplayFunc}}
-            {{#shakespVariable}}{{customDisplayFunc}}{{/shakespVariable}}
-                        {{else}}
-            $maybe value <- {{../modelName}}{{cap propName}} {{../modelName}}
-              {{#shakespVariable}}value{{/shakespVariable}}
-                        {{/if}}
-                      {{/if}}
-                    {{else}}
-            {{#shakespVariable}}{{#if customDisplayFunc}}{{customDisplayFunc}}{{else}}{{../modelName}}{{cap propName}} {{../modelName}}{{/if}}{{/shakespVariable}}
-                    {{/if}}
-                  {{/ifPropNameIsForeignKey}}
-                {{/ifValueEquals}}
-
+{{> model_list_table_data parent=..}}
 
               {{/if}}
 

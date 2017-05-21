@@ -1,0 +1,23 @@
+{{#ifValueEquals formFieldFunc equals="checkBoxField"}}
+                $if {{parent/modelName}}{{cap propName}} {{parent/modelName}}
+                  <span uk-icon="icon: check">
+{{else}}
+  {{#ifPropNameIsForeignKey propName}}
+                {{#shakespVariable}}{{#if customDisplayFunc}}{{customDisplayFunc}}{{else}}{{parent/modelName}}{{truncateTwoCharsAtEnd propName}} {{parent/modelName}}{{/if}}{{/shakespVariable}}
+  {{else}}
+    {{#if isInPersistModel}}
+      {{#if persistNotNull}}
+                {{#shakespVariable}}{{#if customDisplayFunc}}{{customDisplayFunc}}{{else}}{{parent/modelName}}{{cap propName}} {{parent/modelName}}{{/if}}{{/shakespVariable}}
+      {{else}}
+        {{#if customDisplayFunc}}
+                {{#shakespVariable}}{{customDisplayFunc}}{{/shakespVariable}}
+        {{else}}
+                $maybe value <- {{parent/modelName}}{{cap propName}} {{parent/modelName}}
+                  {{#shakespVariable}}value{{/shakespVariable}}
+        {{/if}}
+      {{/if}}
+    {{else}}
+                {{#shakespVariable}}{{#if customDisplayFunc}}{{customDisplayFunc}}{{else}}{{parent/modelName}}{{cap propName}} {{parent/modelName}}{{/if}}{{/shakespVariable}}
+    {{/if}}
+  {{/ifPropNameIsForeignKey}}
+{{/ifValueEquals}}
