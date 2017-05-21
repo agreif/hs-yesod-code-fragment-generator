@@ -1,6 +1,6 @@
 {{#if listOverviewProps}}
 <div .uk-overflow-auto>
-  <table .uk-table {{#if modelEditRoute}}{{#if listEditConditionFunc}}:{{listEditConditionFunc}}:{{/if}}.uk-table-hover{{/if}} .uk-table-striped .uk-table-small>
+  <table .uk-table {{#if modelEditRoute}}{{#if listEditConditionFunc}}:{{listEditConditionFunc}}:{{/if}}.uk-table-hover{{/if}} .uk-table-striped .uk-table-small .uk-table-middle>
     <thead>
       <tr>
         {{#filterByPropValues "propName" listOverviewProps props}}
@@ -20,10 +20,6 @@
             <span uk-icon="icon: plus-circle">
           {{/if}}
         {{/if}}
-
-
-
-
 
     <tbody>
       $forall (Entity {{modelName}}Id {{modelName}}{{#each listOverviewProps}}{{#ifPropNameIsForeignKey this}}, Entity {{this}} {{truncateTwoCharsAtEnd this}}{{/ifPropNameIsForeignKey}}{{/each}}) <- {{modelName}}RowEntTuples
@@ -67,8 +63,5 @@
               <button .uk-button .uk-button-default>
                 <span uk-icon="icon: trash">
           {{/if}}
-
-
-
 
 {{/if}}
