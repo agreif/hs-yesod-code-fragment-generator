@@ -32,7 +32,7 @@ get{{cap modelName}}ListR = do
   {{modelName}}RowEntTuples <- mapM (\ {{modelName}}Ent@(Entity _ {{modelName}}) -> do
   {{#each listOverviewProps}}
     {{#ifPropNameIsForeignKey this}}
-                        let {{this}} = {{../../modelName}}{{cap this}} {{../../modelName}}
+                        let {{this}} = {{../modelName}}{{cap this}} {{../modelName}}
                         {{truncateTwoCharsAtEnd this}} <- runDB $ get404 {{this}}
     {{/ifPropNameIsForeignKey}}
   {{/each}}
