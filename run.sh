@@ -35,7 +35,13 @@ fi
 data_files_dir=$1
 yesod_project_dir=$2
 yaml2json=`find hs-yaml2json/.stack-work/install -name hs-yaml2json`
-handlebars="node handlebars_process.js"
+
+which nodejs > /dev/null
+if test $? -eq 0; then
+    handlebars="nodejs handlebars_process.js"
+else
+    handlebars="node handlebars_process.js"
+fi
 
 tmp_dir=tmp
 if test -d $tmp_dir; then
