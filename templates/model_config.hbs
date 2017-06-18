@@ -18,7 +18,11 @@
     id Int MigrationOnly
   {{#each props}}
     {{#if isInPersistModel}}
+      {{#ifPropNameIsForeignKey propName}}
+    {{propName}} Int{{#unless persistNotNull}} Maybe{{/unless}}
+      {{else}}
     {{propName}} {{propType}}{{#unless persistNotNull}} Maybe{{/unless}}{{#if persistDefault}} default={{persistDefault}}{{/if}}
+      {{/ifPropNameIsForeignKey}}
     {{/if}}
   {{/each}}
   {{/if}}
