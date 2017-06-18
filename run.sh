@@ -34,7 +34,7 @@ fi
 
 data_files_dir=$1
 yesod_project_dir=$2
-yaml2json=`find hs-yaml2json/.stack-work/install -name hs-yaml2json`
+yaml2json=`find hs-yaml2json/.stack-work/install -name hs-yaml2json | head -1`
 
 which nodejs > /dev/null
 if test $? -eq 0; then
