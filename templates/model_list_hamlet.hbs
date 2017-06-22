@@ -59,9 +59,10 @@
 
           <td>
           {{#if modelDeleteRoute}}
-            <form .uk-float-right action={{#shakespRoute}}{{modelDeleteRoute}} {{modelName}}Id{{/shakespRoute}} method=get onsubmit="return confirm('Wirklich loeschen?');">
-              <button .uk-button .uk-button-default>
+            <form .uk-float-right action={{#shakespRoute}}{{modelDeleteRoute}} {{modelName}}Id{{/shakespRoute}} method=get onsubmit="return confirm('Wirklich löschen?');">
+              <button .uk-button .uk-button-link>
                 <span uk-icon="icon: trash">
+                Löschen
           {{/if}}
 
 {{/if}}
