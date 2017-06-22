@@ -1,5 +1,5 @@
 {{#if persistModel}}
-{{persistModel.type}}
+{{persistModel.type}}{{#if persistModel.isJson}} json{{/if}}
   {{#each props}}
     {{#if isInPersistModel}}
     {{propName}} {{propType}}{{#unless persistNotNull}} Maybe{{/unless}}{{#if persistDefault}} default={{persistDefault}}{{/if}}

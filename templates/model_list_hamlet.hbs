@@ -57,7 +57,7 @@
             {{/if}}
           {{/filterByPropValues}}
 
-          <td>
+          <td .uk-text-nowrap>
           {{#if modelDeleteRoute}}
             <form .uk-float-right action={{#shakespRoute}}{{modelDeleteRoute}} {{modelName}}Id{{/shakespRoute}} method=get onsubmit="return confirm('Wirklich löschen?');">
               <button .uk-button .uk-button-link>
