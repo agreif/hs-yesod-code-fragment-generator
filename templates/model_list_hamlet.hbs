@@ -1,4 +1,12 @@
 {{#if listOverviewProps}}
+
+  {{#if isListWithLetterNavi}}
+$if length {{modelName}}RowEntTuples > 10
+  <div .uk-margin-bottom>
+    $forall (char, Entity {{modelName}}Id _) <- {{modelName}}FirstLettersTuples
+      <a href=##{toPathPiece {{modelName}}Id}>#{char}&nbsp;&nbsp;&nbsp;
+  {{/if}}
+
 <div .uk-overflow-auto>
   <table .uk-table {{#if modelEditRoute}}{{#if listEditConditionFunc}}:{{listEditConditionFunc}}:{{/if}}.uk-table-hover{{/if}} .uk-table-striped .uk-table-small .uk-table-middle>
     <thead>
@@ -23,7 +31,7 @@
 
     <tbody>
       $forall (Entity {{modelName}}Id {{modelName}}{{#each listOverviewProps}}{{#ifPropNameIsForeignKey this}}, Entity {{this}} {{truncateTwoCharsAtEnd this}}{{/ifPropNameIsForeignKey}}{{/each}}) <- {{modelName}}RowEntTuples
-        <tr>
+        <tr{{#if isListWithLetterNavi}} ##{toPathPiece {{modelName}}Id}{{/if}}>
           {{#filterByPropValues "propName" listOverviewProps props}}
             {{#if isListColumnDisplayed}}
 
