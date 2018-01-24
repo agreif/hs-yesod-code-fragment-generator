@@ -8,7 +8,7 @@ $if length {{modelName}}RowEntTuples > 10
   {{/if}}
 
 <div .uk-overflow-auto>
-  <table .uk-table {{#if modelEditRoute}}{{#if listEditConditionFunc}}:{{listEditConditionFunc}}:{{/if}}.uk-table-hover{{/if}} .uk-table-striped .uk-table-small .uk-table-middle>
+  <table .uk-table {{#if modelEditRoute}}{{#if listEditConditionFunc}}:{{listEditConditionFunc}}:{{/if}}.uk-table-hover{{/if}} .uk-table-striped .uk-table-small>
     <thead>
       <tr>
         {{#filterByPropValues "propName" listOverviewProps props}}
