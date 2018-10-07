@@ -6,9 +6,9 @@ create or replace function public.process_audit_{{underscore modelName}}()
  language plpgsql
 as $function$
    begin
-       if to_regclass('{{underscore modelName}}_version') is not null then
+       if to_regclass('{{underscore modelName}}_history') is not null then
            if (TG_OP = 'UPDATE' or TG_OP = 'INSERT') then
-                insert into {{underscore modelName}}_version
+                insert into {{underscore modelName}}_history
                        (id, {{#each props}}{{#if isInPersistModel}}{{underscore propName}}{{commaSpaceDelim}}{{/if}}{{/each}})
                        values
                        (new.id, {{#each props}}{{#if isInPersistModel}}new.{{underscore propName}}{{commaSpaceDelim}}{{/if}}{{/each}});
